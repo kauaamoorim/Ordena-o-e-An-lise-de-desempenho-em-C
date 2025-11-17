@@ -59,6 +59,10 @@ Enquanto contar passos, otimizações agressivas podem alterar o “fluxo” e p
 
 gcc -std=c11 -O1 src/*.c -o ordena
 
+
+
+
+
 Sensibilidade ao caso: Insertion se sai bem em quase-ordenado; Quick pode decair em piores casos (pivô ruim).
 
 Memória: Merge usa buffer adicional O(n); Quick e Insertion são in-place.
