@@ -1,4 +1,4 @@
-# ordenacao-rgm-kaua (exemplo)
+# Ordenação 
 
 ## Descrição
 Projeto para a avaliação "Ordenação e Análise de Desempenho em C" — ordena os dígitos do RGM e compara 3 algoritmos:
@@ -58,3 +58,14 @@ Enquanto contar passos, otimizações agressivas podem alterar o “fluxo” e p
 
 
 gcc -std=c11 -O1 src/*.c -o ordena
+
+Sensibilidade ao caso: Insertion se sai bem em quase-ordenado; Quick pode decair em piores casos (pivô ruim).
+
+Memória: Merge usa buffer adicional O(n); Quick e Insertion são in-place.
+
+Conclusão
+
+A análise comparativa dos algoritmos de ordenação — Insertion Sort, Quick Sort e Merge Sort — evidenciou como diferentes estratégias impactam diretamente o desempenho computacional. O Insertion Sort mostrou-se eficiente apenas para vetores pequenos ou quase ordenados, apresentando crescimento quadrático no número de operações à medida que o tamanho dos dados aumenta. Já o Quick Sort demonstrou excelente performance na maior parte dos cenários, sendo o algoritmo mais rápido no caso médio, apesar de possuir pior caso quadrático. Por sua vez, o Merge Sort manteve desempenho estável e previsível, com complexidade O(n log n) garantida, ao custo de maior uso de memória devido à recursão e às estruturas auxiliares.
+
+Os resultados obtidos comprovam que não existe um algoritmo “melhor” de forma absoluta, mas sim aquele que melhor se adapta ao tipo de dado e à necessidade da aplicação. Em contextos reais, a escolha adequada depende do tamanho da entrada, do grau de ordenação prévia e das restrições de memória. Assim, este estudo contribuiu para compreender, na prática, como diferentes estruturas e abordagens de ordenação se comportam, reforçando a importância da análise de complexidade na computação.
+
