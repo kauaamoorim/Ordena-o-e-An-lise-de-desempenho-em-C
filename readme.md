@@ -1,75 +1,143 @@
-# Ordenação 
+Projeto de Ordenação e Análise de Desempenho em C
 
-## Descrição
-Projeto para a avaliação "Ordenação e Análise de Desempenho em C" — ordena os dígitos do RGM e compara 3 algoritmos:
-- **Insertion Sort** (crescente; in-place; O(n²) worst/avg)
-- **Quick Sort** (Lomuto partition; in-place; O(n log n) médio)
-- **Merge Sort** (divide-and-conquer; extra memória; O(n log n) worst)
+1. Descrição
 
-RGM usado por padrão: **045620920** (9 dígitos).
+Projeto desenvolvido para a avaliação “Ordenação e Análise de Desempenho em C”, cujo objetivo é ordenar os dígitos do RGM e comparar o desempenho de três algoritmos de ordenação:
 
-## Estrutura
-/ordenacao-rgm-seuusuario ├─ src/ │   ├─ main.c │   ├─ sorts.c │   └─ sorts.h └─ README.md
+Insertion Sort — crescente; in-place; O(n²) no pior e caso médio.
+
+Quick Sort — partição de Lomuto; in-place; O(n log n) médio.
+
+Merge Sort — divide and conquer; requer memória extra; O(n log n) no pior caso.
 
 
-## Como compilar
-Use gcc (sugestão: sem -O3 enquanto contar passos; -O1 é aceitável):
-```bash
+RGM utilizado: 045620920 (9 dígitos).
+
+
+---
+
+2. Estrutura do Projeto
+
+/ordenacao-rgm/
+│
+├── src/
+│   ├── main.c
+│   ├── sorts.c
+│   └── sorts.h
+│
+└── README.md
+
+
+---
+
+3. Compilação
+
+Para compilar o projeto usando gcc:
+
 gcc -std=c11 src/*.c -o ordena
 
-Como executar
-
-Usando o RGM padrão (045620920):
-./ordena
-
-Ou passando outro RGM como argumento:
-./ordena 123456789
-
-Saída: CSV no stdout com colunas:
-metodo,N,caso,passos,tempo_ms 
-Política de contagem de passos (adotada)
-Comparações: contado 1 para cada comparação explícita entre elementos (macro COUNT_CMP).
-
-Trocas/movimentações: contado 1 para cada atribuição que move/coloca elementos no vetor (macro COUNT_SWAP).
-
-No Merge, cada cópia/atribuição para o buffer e cópia de volta conta como um movimento.
+> Observação importante:
+Para manter a contagem de passos coerente, evite -O3.
+Recomenda-se usar -O0 ou -O1, pois otimizações agressivas removem instruções e distorcem resultados.
 
 
-Nos resultados combinamos as duas medidas (passos = comparações + movimentações) para facilitar comparação agregada.
 
-
-Medição de tempo
-
-Usado clock() de <time.h>. O tempo é apresentado em ms.
-
-Cada caso é repetido 5 vezes; o CSV informa a média dos tempos e média dos passos.
-
-
-Casos testados
-
-RGM: ordena os dígitos do RGM (9 elementos).
-
-Aleatório: vetores gerados aleatoriamente para N = 100, 1000, 10000.
-
-
-Observações sobre compilação/otimização
-
-Enquanto contar passos, otimizações agressivas podem alterar o “fluxo” e pular instruções observáveis; recomenda-se compilar com -O0 ou -O1 para medições de passos consistentes:
-
+Exemplo recomendado:
 
 gcc -std=c11 -O1 src/*.c -o ordena
 
 
+---
+
+4. Execução
+
+Usando o RGM padrão (045620920):
+
+./ordena
+
+Usando outro RGM como argumento:
+
+./ordena 123456789
+
+
+---
+
+5. Saída (Formato CSV)
+
+O programa escreve no stdout uma tabela CSV com as seguintes colunas:
+
+metodo, N, caso, passos, tempo_ms
+
+Casos testados:
+
+RGM: vetor com os 9 dígitos do RGM.
+
+Aleatório: vetores aleatórios com tamanhos
+
+N = 100
+
+N = 1000
+
+N = 10000
 
 
 
-Sensibilidade ao caso: Insertion se sai bem em quase-ordenado; Quick pode decair em piores casos (pivô ruim).
+Cada teste é repetido 5 vezes e o CSV exibe a média de passos e tempos.
 
-Memória: Merge usa buffer adicional O(n); Quick e Insertion são in-place.
 
-Conclusão
+---
 
-A análise comparativa dos algoritmos de ordenação — Insertion Sort, Quick Sort e Merge Sort — evidenciou como diferentes estratégias impactam diretamente o desempenho computacional. O Insertion Sort mostrou-se eficiente apenas para vetores pequenos ou quase ordenados, apresentando crescimento quadrático no número de operações à medida que o tamanho dos dados aumenta. Já o Quick Sort demonstrou excelente performance na maior parte dos cenários, sendo o algoritmo mais rápido no caso médio, apesar de possuir pior caso quadrático. Por sua vez, o Merge Sort manteve desempenho estável e previsível, com complexidade O(n log n) garantida, ao custo de maior uso de memória devido à recursão e às estruturas auxiliares.
+6. Política de Contagem de Passos
 
-Os resultados obtidos comprovam que não existe um algoritmo “melhor” de forma absoluta, mas sim aquele que melhor se adapta ao tipo de dado e à necessidade da aplicação. Em contextos reais, a escolha adequada depende do tamanho da entrada, do grau de ordenação prévia e das restrições de memória. Assim, este estudo contribuiu para compreender, na prática, como diferentes estruturas e abordagens de ordenação se comportam, reforçando a importância da análise de complexidade na computação.
+A contagem segue o modelo didático adotado em sala:
 
+✔ Comparações
+
+Cada comparação entre elementos conta 1 passo (COUNT_CMP).
+
+✔ Trocas / Movimentações
+
+Cada atribuição ou cópia que movimenta valores conta 1 passo (COUNT_SWAP).
+
+No Merge Sort, cada cópia para o vetor auxiliar e cada cópia de volta ao vetor original contam como movimentações.
+
+✔ Passos totais
+
+Para facilitar a análise, o relatório usa:
+
+passos = comparações + movimentações
+
+
+---
+
+7. Medição de Tempo
+
+Usado clock() da biblioteca <time.h>.
+
+Resultados apresentados em milissegundos (ms).
+
+Média de 5 execuções por caso e por algoritmo.
+
+
+
+---
+
+8. Observações Importantes
+
+Insertion Sort se destaca em vetores pequenos ou quase ordenados.
+
+Quick Sort pode degradar no pior caso (pivô ruim).
+
+Merge Sort é estável e possui desempenho garantido, ao custo de memória extra.
+
+Quick e Insertion são in-place; Merge não é.
+
+
+
+---
+
+9. Conclusão
+
+A análise comparativa entre Insertion Sort, Quick Sort e Merge Sort demonstrou como diferentes estratégias de ordenação influenciam o desempenho computacional. O Insertion Sort mostrou eficiência apenas em vetores pequenos ou quase ordenados, exibindo crescimento quadrático conforme o tamanho dos dados aumenta. O Quick Sort apresentou o melhor desempenho no caso médio, sendo geralmente o algoritmo mais rápido, embora possua pior caso quadrático. Já o Merge Sort manteve desempenho estável e previsível, com complexidade garantida de O(n log n), porém demandando memória extra devido ao uso de vetores auxiliares.
+
+Os resultados confirmam que não há um algoritmo universalmente superior, e sim algoritmos que se adaptam melhor a cenários específicos. Fatores como tamanho do vetor, distribuição dos dados e restrições de memória influenciam diretamente a escolha da técnica mais adequada. Assim, o estudo contribuiu para a compreensão prática do comportamento dos algoritmos e reforça a importância da análise de complexidade no desenvolvimento de soluções computacionais eficientes.
